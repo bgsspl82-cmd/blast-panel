@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YOGA BLAST</title>
+
+<style>
+*{box-sizing:border-box}
+:root{--bg:#050b19;--panel:#0c1b36;--blue:#087bfa;--cyan:#18d9ff;--muted:#a6bfdf}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at top,#12294b,#050b19 65%);color:#f4f8ff;font-family:Arial,sans-serif;padding-bottom:100px}
+header{position:sticky;top:0;z-index:10;padding:17px;display:flex;align-items:center;justify-content:space-between;gap:8px;background:#071127ed;border-bottom:1px solid #21446d;backdrop-filter:blur(12px)}
+.logo{font-size:22px;font-weight:900}.logo span{color:var(--cyan)}
+header small{display:block;margin-top:5px;color:var(--muted);font-size:10px}
+.online{color:#69f5bd;font-size:12px;background:#10332f;padding:9px 11px;border-radius:20px;white-space:nowrap}
+nav{position:fixed;z-index:30;bottom:10px;left:10px;right:10px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;padding:9px 4px calc(9px + env(safe-area-inset-bottom));background:#07152af5;border:1px solid #1762a1;border-radius:22px;box-shadow:0 0 25px #087bfa30;backdrop-filter:blur(16px)}
+nav button{min-width:0;padding:8px 1px;background:transparent;border:0;border-radius:12px;color:#a6bfdf;font-size:10px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:5px}
+.navicon{font-size:23px;line-height:1}
+nav button.active{color:white;background:linear-gradient(#104582,#0b2344);box-shadow:inset 0 0 0 1px #168cff}
+nav button.active .navicon{color:var(--cyan);text-shadow:0 0 12px #00bfff}
+main{max-width:850px;margin:auto;padding:17px 13px 30px}
+.page{display:none}.page.active{display:block}
+.hero,.panel,.card,.device,.tile{background:linear-gradient(135deg,#10294b,#09162c);border:1px solid #234b7b;border-radius:19px;padding:17px;margin-bottom:14px}
+.hero{background:linear-gradient(125deg,#074a9d,#10274c 75%);border-color:#078bff;box-shadow:0 0 20px #087bfa20;overflow:hidden}
+.hero h2{font-size:27px;margin:12px 0}
+.hero p{color:#c3d9f8;line-height:1.6}
+.hero>small{color:#7eeaff;letter-spacing:1.5px}
+h2{margin-top:5px}h3{font-size:16px}
+small,.muted{color:var(--muted)}
+.stats,.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stats .card{margin:0;padding:14px;border-radius:15px;min-width:0}
+.stats .card h2{font-size:27px;margin:10px 0}
+.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tile{margin:0;text-align:center;padding:18px 7px;cursor:pointer}
+.tile b{display:block;margin:9px 0 6px;font-size:13px}
+.tileicon{font-size:27px;color:var(--cyan)}
+.device{display:flex;align-items:center;gap:11px;flex-wrap:wrap;padding:13px;margin-bottom:9px}
+.phone{font-size:24px;background:#103b4a;padding:11px;border-radius:12px}
+.info{flex:1;min-width:100px}.info b{display:block;margin-bottom:6px}
+.pending{color:#ffc75c;font-size:12px}.status{color:#35d99b}
+button{cursor:pointer;font-family:inherit}
+.action{width:100%;padding:14px;border:1px solid #27bdff;border-radius:12px;background:linear-gradient(110deg,#078bff,#0757db);color:white;font-size:15px;font-weight:bold;margin-top:10px}
+.outline{background:#142a49;border:1px solid #355580;color:white;padding:12px;border-radius:10px}
+.add{width:100%;margin-top:8px}.stop{background:#92243b;border-color:#c63c59}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mode{background:#142644;border:1px solid #355580;border-radius:12px;padding:12px 3px;text-align:center;color:white;min-width:0}
+.mode b{display:block;margin:8px 0;font-size:12px}.mode.active{border:1px solid #168cff;background:#0b3974}
+.note{background:#102747;border:1px solid #244a78;padding:13px;border-radius:12px;color:#bcd5ff;font-size:12px;line-height:1.5;margin-top:15px}
+@media(min-width:600px){main{padding:24px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}nav{left:50%;right:auto;transform:translateX(-50%);width:min(600px,calc(100% - 20px))}}
+@media(max-width:370px){.logo{font-size:19px}header{padding:13px 10px}.hero,.panel{padding:14px}nav button{font-size:9px}}
+</style>
+
+</head>
+<body>
+<header>
+<div><div><div class="logo">⚡ YOGA <span>BLAST</span></div><small>SMS · WHATSAPP · BROADCAST PANEL</small></div></div>
+<div class="online">● Online</div>
+</header>
+
+<nav aria-label="Navigasi utama">
+<button class="active" onclick="showPage('dashboard',this)"><span class="navicon">⌂</span><span>Dashboard</span></button>
+<button onclick="showPage('whatsapp',this)"><span class="navicon">◉</span><span>WhatsApp</span></button>
+<button onclick="showPage('database',this)"><span class="navicon">♧</span><span>Kontak</span></button>
+<button onclick="showPage('sms',this)"><span class="navicon">➤</span><span>SMS Blast</span></button>
+<button onclick="showPage('history',this)"><span class="navicon">◷</span><span>Riwayat</span></button>
+</nav>
+
+<main>
+<section id="dashboard" class="page active">
+<div class="hero">
+<small>MEMBER AREA</small>
+<h2>Selamat Datang!</h2>
+<p>Kelola layanan YOGA BLAST dalam satu dashboard.</p>
+</div>
+<div class="stats">
+<div class="card"><small>✉ Total SMS</small><h2>0</h2><small>Pesan tercatat</small></div>
+<div class="card"><small>◉ Nomor WhatsApp</small><h2>3</h2><small>Slot tersedia</small></div>
+<div class="card"><small>♧ Total Kontak</small><h2>0</h2><small>Data tersimpan</small></div>
+<div class="card"><small>⌁ Aktivitas Hari Ini</small><h2>0</h2><small>Aktivitas tercatat</small></div>
+</div>
+<h3>LAYANAN MEMBER</h3>
+<div class="tiles">
+<div class="tile" onclick="showPage('whatsapp')">💬<b>WhatsApp</b><small>Kelola perangkat</small></div>
+<div class="tile" onclick="showPage('database')">📁<b>Database Kontak</b><small>Kelola kontak</small></div>
+<div class="tile" onclick="showPage('sms')">📨<b>SMS Blast</b><small>Kelola pesan</small></div>
+<div class="tile" onclick="showPage('history')">📊<b>Riwayat</b><small>Aktivitas</small></div>
+</div>
+</section>
+
+<section id="whatsapp" class="page">
+<div class="hero">
+<small>MEMBER AREA</small>
+<h2>💬 WhatsApp Connection</h2>
+<p>Kelola beberapa akun WhatsApp dalam satu dashboard.</p>
+
+</div>
+
+<div class="panel">
+<h3>Daftar Perangkat</h3>
+<p class="muted">Minimal 3 slot nomor</p>
+<div id="devices"><p id="emptyDevices" class="muted">Belum ada perangkat tertaut. Tekan Hubungkan Perangkat untuk memulai.</p></div>
+</div>
+<button class="outline add" onclick="addDevice()">＋ Hubungkan Perangkat</button>
+<button class="outline add" onclick="alert('Status tersedia setelah integrasi resmi aktif.')">↻ Refresh Status</button>
+</div>
+
+<div class="panel">
+<h3>⚡ BLAST CONTROL</h3>
+<p class="muted">Pilih jadwal pengiriman pesan yang disetujui penerima.</p>
+<div class="grid">
+<button class="mode active" onclick="choose(this)">⏱<b>2 Detik</b><small>Terjadwal</small></button>
+<button class="mode" onclick="choose(this)">◷<b>3 Detik</b><small>Terjadwal</small></button>
+<button class="mode" disabled>⚡<b>Kilat</b><small>Tidak tersedia</small></button>
+</div>
+<p>Status: <span id="blastStatus" class="pending">STOP</span></p>
+<button class="action" onclick="alert('Pengiriman belum aktif. Integrasikan API resmi dan pastikan persetujuan penerima.')">▶ PLAY BLAST</button>
+<button class="action stop" onclick="document.getElementById('blastStatus').textContent='STOP'">■ STOP BLAST</button>
+<div class="note">ⓘ Nomor, status koneksi, dan pengiriman sungguhan memerlukan integrasi resmi Meta. Kirim pesan hanya kepada penerima yang telah memberikan izin.</div>
+</div>
+</section>
+
+<section id="database" class="page">
+<div class="hero"><h2>📁 Database Kontak</h2><p>Kelola database kontak member.</p></div>
+<div class="panel"><h3>Database</h3><p class="muted">Fitur import dan export akan ditambahkan berikutnya.</p></div>
+</section>
+
+<section id="sms" class="page">
+<div class="hero"><h2>📨 SMS Blast</h2><p>Kelola layanan SMS member.</p></div>
+<div class="panel"><p class="muted">Integrasi SMS API akan ditambahkan berikutnya.</p></div>
+</section>
+
+<section id="history" class="page">
+<div class="hero"><h2>📊 Riwayat Aktivitas</h2></div>
+<div class="panel">Belum ada aktivitas.</div>
+</section>
+</main>
+
+<script>
+function showPage(id,btn){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+ else document.querySelectorAll('nav button').forEach(b=>{
+ if(b.textContent.includes(id==='whatsapp'?'WhatsApp':id==='dashboard'?'Dashboard':id==='database'?'Database':id==='sms'?'SMS':'Riwayat'))b.classList.add('active');
+ });
+ window.scrollTo(0,0);
+}
+function choose(el){
+ document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));
+ el.classList.add('active');
+}
+let count = 0;
+function addDevice(){
+  alert("Koneksi WhatsApp asli belum dikonfigurasi. Penautan resmi Meta memerlukan WhatsApp Business Embedded Signup, App ID, Config ID, dan domain HTTPS.");
+}
+
+</script>
+</body>
+</html>
